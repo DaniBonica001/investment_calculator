@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import styles from "./FormInformation.module.css"
+import styles from "./FormInformation.module.css";
 
-function FormInformation() {
+function FormInformation(props) {
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       currentSavings: 0,
@@ -13,9 +13,18 @@ function FormInformation() {
 
   const onSubmit = (data) => {
     console.log(data);
+    props.handleData(data);
   };
   const handleReset = () => {
-    reset();
+    //Copilot How Can I reset with the default values
+    reset({
+      currentSavings: 100,
+      yearlySavings: 0,
+      expectedReturn: 0,
+      duration: 0,
+    });
+
+    props.handleReset();
   };
 
   return (
@@ -56,10 +65,14 @@ function FormInformation() {
           </p>
         </div>
         <p className={styles.actions}>
-          <button type="reset" className={styles.buttonAlt} onClick={handleReset}>
+          <button
+            type="reset"
+            className={styles.buttonAlt}
+            onClick={handleReset}
+          >
             Reset
           </button>
-          <button type="submit" className= {styles.button}>
+          <button type="submit" className={styles.button}>
             Calculate
           </button>
         </p>
