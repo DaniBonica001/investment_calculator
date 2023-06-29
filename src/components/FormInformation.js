@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import styles from "./FormInformation.module.css";
 
 function FormInformation(props) {
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, setValue  } = useForm({
     defaultValues: {
       currentSavings: 0,
       yearlySavings: 0,
@@ -10,19 +10,18 @@ function FormInformation(props) {
       duration: 0,
     },
   });
+  
+  
 
   const onSubmit = (data) => {
     console.log(data);
     props.handleData(data);
   };
-  const handleReset = () => {
-    //Copilot How Can I reset with the default values
-    reset({
-      currentSavings: 0,
-      yearlySavings: 0,
-      expectedReturn: 0,
-      duration: 0,
-    });
+  const handleReset = () => {    
+    setValue("currentSavings", 0);
+    setValue("yearlySavings", 0);
+    setValue("expectedReturn", 0);
+    setValue("duration", 0);
 
     props.handleReset();
   };
