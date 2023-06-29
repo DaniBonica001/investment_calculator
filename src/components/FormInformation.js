@@ -18,7 +18,7 @@ function FormInformation(props) {
   const handleReset = () => {
     //Copilot How Can I reset with the default values
     reset({
-      currentSavings: 100,
+      currentSavings: 0,
       yearlySavings: 0,
       expectedReturn: 0,
       duration: 0,

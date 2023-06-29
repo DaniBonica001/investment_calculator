@@ -1,42 +1,42 @@
 import { useState } from "react";
 import logo from "./assets/investment-calculator-logo.png";
 import FormInformation from "./components/FormInformation";
+import Table from "./components/ResultTable";
 
-function App() {
-  const [isAvailable, setIsAvailable] = useState(false);
+function App() {  
+  const [userInput, setUserInput] = useState(null);
 
   const calculateHandler = (userInput) => {
-    // Should be triggered when form is submitted
-    // You might not directly want to bind it to the submit event on the form though...
+    setUserInput(userInput);
+    console.log(userInput);
+  };
 
-    const yearlyData = []; // per-year results
+  const yearlyData = [];
 
-    let currentSavings = +userInput["current-savings"]; // feel free to change the shape of this input object!
-    const yearlyContribution = +userInput["yearly-contribution"]; // as mentioned: feel free to change the shape...
-    const expectedReturn = +userInput["expected-return"] / 100;
-    const duration = +userInput["duration"];
+  if (userInput) {    
 
-    // The below code calculates yearly results (total savings, interest etc)
+    let currentSavings = +userInput.currentSavings;
+    const yearlyContribution = +userInput.yearlySavings;
+    const expectedReturn = +userInput.expectedReturn / 100;
+    const duration = +userInput.duration;
+
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
       yearlyData.push({
-        // feel free to change the shape of the data pushed to the array!
         year: i + 1,
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
         yearlyContribution: yearlyContribution,
       });
     }
-
-    console.log(yearlyData);
-    setIsAvailable(true);
-    // do something with yearlyData ...
-  };
+    
+  }
 
   const handleReset = () => {
-    setIsAvailable(false)
-  }
+    setUserInput(null)
+    console.log("clear")
+  };
 
   return (
     <div>
@@ -45,33 +45,13 @@ function App() {
         <h1>Investment Calculator</h1>
       </header>
 
-      <FormInformation handleData={calculateHandler} handleReset={handleReset}/>
+      <FormInformation
+        handleData={calculateHandler}
+        handleReset={handleReset}
+      />
 
-      {/* Todo: Show below table conditionally (only once result data is available) */}
-      {/* Show fallback text if no data is available */}
-      {!isAvailable && <p>Result data is not available!</p>}
-      {isAvailable && (
-        <table className="result">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Total Savings</th>
-              <th>Interest (Year)</th>
-              <th>Total Interest</th>
-              <th>Invested Capital</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>YEAR NUMBER</td>
-              <td>TOTAL SAVINGS END OF YEAR</td>
-              <td>INTEREST GAINED IN YEAR</td>
-              <td>TOTAL INTEREST GAINED</td>
-              <td>TOTAL INVESTED CAPITAL</td>
-            </tr>
-          </tbody>
-        </table>
-      )}
+      {!userInput && <p>Result data is not available!</p>}
+      {userInput && <Table investmentData={yearlyData} initialInvestment={userInput.currentSavings}/>}
     </div>
   );
 }
