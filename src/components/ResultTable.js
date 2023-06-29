@@ -1,4 +1,12 @@
 import styles from "./Table.module.css";
+
+const formatter = new Intl.NumberFormat('en-US',{
+  style:'currency',
+  currency:'USD',
+  minimumFractionDigits:2,
+  maximumFractionDigits: 2,
+})
+
 function Table({ investmentData, initialInvestment }) {
   console.log(investmentData);
   console.log(initialInvestment);
@@ -18,15 +26,15 @@ function Table({ investmentData, initialInvestment }) {
           investmentData.map((info, index) => (
             <tr key={index}>
               <td>{info.year}</td>
-              <td>{info.savingsEndOfYear}</td>
-              <td>{info.yearlyInterest}</td>
+              <td>{formatter.format(info.savingsEndOfYear)}</td>
+              <td>{formatter.format(info.yearlyInterest)}</td>
               <td>
-                {info.savingsEndOfYear -
+                {formatter.format(info.savingsEndOfYear -
                   initialInvestment -
-                  info.yearlyContribution * info.year}
+                  info.yearlyContribution * info.year)}
               </td>
               <td>
-                {initialInvestment + info.yearlyContribution * info.year}
+                {formatter.format(initialInvestment + info.yearlyContribution * info.year)}
               </td>
             </tr>
           ))}
