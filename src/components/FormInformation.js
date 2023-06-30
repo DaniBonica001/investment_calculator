@@ -14,7 +14,7 @@ function FormInformation(props) {
   
 
   const onSubmit = (data) => {
-    console.log(data);
+    //console.log(data);
     props.handleData(data);
   };
   const handleReset = () => {    

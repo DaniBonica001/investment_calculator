@@ -8,8 +8,6 @@ const formatter = new Intl.NumberFormat('en-US',{
 })
 
 function Table({ investmentData, initialInvestment }) {
-  console.log(investmentData);
-  console.log(initialInvestment);
   return (
     <table className={styles.result}>
       <thead>

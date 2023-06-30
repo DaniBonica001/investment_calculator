@@ -8,7 +8,7 @@ function App() {
 
   const calculateHandler = (userInput) => {
     setUserInput(userInput);
-    console.log(userInput);
+    //console.log(userInput);
   };
 
   const yearlyData = [];
@@ -17,8 +17,13 @@ function App() {
 
     let currentSavings = +userInput.currentSavings;
     const yearlyContribution = +userInput.yearlySavings;
-    const expectedReturn = +userInput.expectedReturn / 100;
+    const expectedReturn = (+userInput.expectedReturn)/100;
     const duration = +userInput.duration;
+
+    // console.log(currentSavings);
+    // console.log(yearlyContribution);
+    // console.log(expectedReturn);
+    // console.log(duration);
 
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
